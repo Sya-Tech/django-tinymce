@@ -14,4 +14,5 @@ urlpatterns = patterns('tinymce.views',
     url(r'^compressor/$', 'compressor', name='tinymce-compressor'),
     url(r'^filebrowser/$', 'filebrowser', name='tinymce-filebrowser'),
     url(r'^preview/(?P<name>.+)/$', 'preview', name='tinymce-preview'),
+    url(r'^static/(?P<path>.+)$', 'static', name='tinymce-static'),
 )

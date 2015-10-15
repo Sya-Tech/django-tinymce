@@ -137,3 +137,36 @@ def filebrowser(request):
 
     return render_to_response('tinymce/filebrowser.js', {'fb_url': fb_url},
             context_instance=RequestContext(request))
+
+
+import os
+from django.http import FileResponse
+from django.views.decorators.cache import cache_control
+from django.contrib.staticfiles import finders
+
+@cache_control(public=True, max_age=31536000)
+def static(request, path):
+    dirname, restname = path.split('/', 1)
+    base_path = finders.find(dirname)
+
+    if path.endswith('.htm'):
+        content_type = 'text/html'
+    elif path.endswith('.css'):
+        content_type = 'text/css'
+    elif path.endswith('.js'):
+        content_type = 'application/javascript'
+    elif path.endswith('.gif'):
+        content_type = 'image/gif'
+    elif path.endswith('.png'):
+        content_type = 'image/png'
+    elif path.endswith('.jpg'):
+        content_type = 'image/jpg'
+    elif path.endswith('.txt'):
+        content_type = 'text/plain'
+    else:
+        content_type = 'application/octet-staeam'
+
+    response = FileResponse(open(os.path.join(base_path, restname), 'rb'))
+    response['Content-Type'] = content_type
+
+    return response

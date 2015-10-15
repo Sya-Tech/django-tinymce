@@ -105,10 +105,11 @@ class TinyMCE(forms.Textarea):
         return mark_safe('\n'.join(html))
 
     def _media(self):
-        if tinymce.settings.USE_COMPRESSOR:
-            js = [reverse('tinymce-compressor')]
-        else:
-            js = [tinymce.settings.JS_URL]
+        # if tinymce.settings.USE_COMPRESSOR:
+        #     js = [reverse('tinymce-compressor')]
+        # else:
+        #     js = [tinymce.settings.JS_URL]
+        js = [reverse('tinymce-static', kwargs={'path': 'tiny_mce/tiny_mce.js'})]
         if tinymce.settings.USE_FILEBROWSER:
             js.append(reverse('tinymce-filebrowser'))
         js.append('django_tinymce/init_tinymce.js')
